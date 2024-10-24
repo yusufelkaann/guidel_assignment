@@ -14,7 +14,7 @@ A mobile application built with Flutter to show points of interest (POI) on Goog
 
 ### Prerequisites
 - Flutter SDK [Get Flutter](https://flutter.dev/docs/get-started/install)
-- Google Maps API key [Generate API Key](https://developers.google.com/maps/documentation/javascript/get-api-key)
+- Google Maps API key 
 
 ### Setup
 1. Clone the repository:
