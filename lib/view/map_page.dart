@@ -27,6 +27,7 @@ class _MapPageState extends State<MapPage> {
   late MarkerService _mapService;
   late LocationService _locationService;
   late GetCenterService _centerService;
+  double _currentZoom = 14.0;
   
   @override
   void initState() {
@@ -78,6 +79,26 @@ class _MapPageState extends State<MapPage> {
       poiProvider.currentPosition = centerPosition;
       await _fetchMarkers();
       setState(() {});
+    }
+  }
+
+  // Function to zoom in
+  void _zoomIn() {
+    if (_mapController != null) {
+      setState(() {
+        _currentZoom++;
+        _mapController!.animateCamera(CameraUpdate.zoomIn());
+      });
+    }
+  }
+
+  // Function to zoom out
+  void _zoomOut() {
+    if (_mapController != null) {
+      setState(() {
+        _currentZoom--;
+        _mapController!.animateCamera(CameraUpdate.zoomOut());
+      });
     }
   }
 
@@ -209,7 +230,33 @@ class _MapPageState extends State<MapPage> {
                 );
               },
             ),
-          ],
+            Positioned(
+              bottom: 80.0,
+              right: 10.0,
+              child: Column(children: [
+                //zoom in button
+                FloatingActionButton(
+                  onPressed: _zoomIn,
+                  heroTag: 'Zoom In',
+                  mini: true,
+                  backgroundColor: CustomColors.primaryColor,
+                  child:Icon(Icons.zoom_in, color: CustomColors.secondaryColor)          
+                ),
+
+                SizedBox(height: 10,),
+                //zoom out button
+                FloatingActionButton(
+                  onPressed: _zoomOut,
+                  heroTag: 'Zoom Out',
+                  mini: true,
+                  backgroundColor: CustomColors.primaryColor,
+                  child:Icon(Icons.zoom_out, color: CustomColors.secondaryColor)          
+                )
+
+              ],
+            )
+          ),
+        ],
       ),
     );
   }
