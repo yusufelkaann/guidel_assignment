@@ -1,7 +1,7 @@
 //        import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:guidel_assignment/providers/poi_type_provider.dart';
+import 'package:guidel_assignment/providers/poi_provider.dart';
 import 'package:guidel_assignment/view/map_page.dart';
 import 'package:provider/provider.dart';
 

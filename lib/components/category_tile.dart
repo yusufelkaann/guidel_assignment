@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:guidel_assignment/styles/custom_colors.dart';
+import 'package:guidel_assignment/styles/custom_sizes.dart';
 
 class CategoryTile extends StatelessWidget {
   final String category;
@@ -16,20 +18,20 @@ class CategoryTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        margin: const EdgeInsets.only(right: 8),
+        padding: const EdgeInsets.symmetric(horizontal: CustomSizes.mediumPadding, vertical: CustomSizes.smallPadding),
+        margin: const EdgeInsets.only(right: CustomSizes.margin),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.black : Colors.transparent, // Background color only when selected
+          color: isSelected ? CustomColors.secondaryColor : CustomColors.tertiary, // Background color only when selected
           border: Border.all(
-            color: Colors.transparent, // Border color 
+            color: CustomColors.tertiary, // Border color 
             width: 2, // Border width
           ),
-          borderRadius: BorderRadius.circular(12), // Optional: rounded corners
+          borderRadius: BorderRadius.circular(CustomSizes.smallradius), // Optional: rounded corners
         ),
         child: Text(
           category,
           style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black, // Text color change when selected
+            color: isSelected ? CustomColors.primaryColor : CustomColors.secondaryColor, // Text color change when selected
           ),
         ),
       ),

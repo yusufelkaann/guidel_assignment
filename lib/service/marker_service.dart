@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:guidel_assignment/models/poi_model.dart';
 import 'package:guidel_assignment/service/current_location_service.dart';
-import '../providers/poi_type_provider.dart';
+import '../providers/poi_provider.dart';
 
 class MarkerService {
   final POIProvider poiProvider;

@@ -3,11 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:guidel_assignment/components/category_tile.dart';
+import 'package:guidel_assignment/styles/custom_colors.dart';
+import 'package:guidel_assignment/styles/custom_sizes.dart';
 import 'package:guidel_assignment/models/poi_model.dart';
 import 'package:guidel_assignment/service/get_center_service.dart';
 import 'package:guidel_assignment/service/marker_service.dart';
 import 'package:provider/provider.dart';
-import '../providers/poi_type_provider.dart';
+import '../providers/poi_provider.dart';
 import 'package:guidel_assignment/service/current_location_service.dart';
 
 class MapPage extends StatefulWidget {
@@ -26,9 +28,6 @@ class _MapPageState extends State<MapPage> {
   late LocationService _locationService;
   late GetCenterService _centerService;
   
-
-
-
   @override
   void initState() {
     super.initState();
@@ -40,7 +39,8 @@ class _MapPageState extends State<MapPage> {
   }
   
   
-  /* fetches to the location of the user using the fetchCurrentLocation 
+  /* 
+  fetches to the location of the user using the fetchCurrentLocation 
   function in the location service
   */
   Future<void> _fetchCurrentLocation() async {
@@ -124,10 +124,10 @@ class _MapPageState extends State<MapPage> {
               maxChildSize: 0.8,
               builder: (context, scrollController) {
                 return Container(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(CustomSizes.mediumPadding),
                   decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
+                    color: CustomColors.tertiary,
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(CustomSizes.largeRadius)),
                   ),
                   child: Column(
                     children: [
@@ -138,7 +138,7 @@ class _MapPageState extends State<MapPage> {
                         },
                         child: Text(
                           "Search Here",
-                          style: TextStyle(fontSize: 18, color: Colors.black),
+                          style: TextStyle(fontSize: CustomSizes.mediumFontSize, color: CustomColors.secondaryColor),
                         ),
                       ),
                     
@@ -166,7 +166,7 @@ class _MapPageState extends State<MapPage> {
                             ?Center(
                               child: Text(
                                 'No landmarks found in this area.',
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                style: TextStyle(fontSize: CustomSizes.smallFontSize, fontWeight: FontWeight.bold),
                               ),
                             )
                         : ListView.builder(
@@ -182,17 +182,17 @@ class _MapPageState extends State<MapPage> {
                                 );
                               },
                               child: Card(
-                                color: Colors.white,
-                                margin: EdgeInsets.symmetric(vertical: 8.0),
+                                color: CustomColors.primaryColor,
+                                margin: EdgeInsets.symmetric(vertical: CustomSizes.margin),
                                 child: ListTile(
                                   leading: poi.imageUrl.isNotEmpty
                                       ? Image.network(
                                           poi.imageUrl,
-                                          width: 50,
-                                          height: 50,
+                                          width: CustomSizes.cardHeight,
+                                          height: CustomSizes.cardHeight,
                                           fit: BoxFit.cover,
                                         )
-                                      : Icon(Icons.place, size: 50), // Default icon when image is null
+                                      : Icon(Icons.place, size: CustomSizes.cardHeight), // Default icon when image is null
                                   title: Text(
                                     poi.name,
                                     style: TextStyle(fontWeight: FontWeight.bold),
