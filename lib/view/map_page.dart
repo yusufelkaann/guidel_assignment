@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:guidel_assignment/components/category_tile.dart';
 import 'package:guidel_assignment/models/poi_model.dart';
-import 'package:guidel_assignment/service/map_service.dart';
+import 'package:guidel_assignment/service/get_center_service.dart';
+import 'package:guidel_assignment/service/marker_service.dart';
 import 'package:provider/provider.dart';
 import '../providers/poi_type_provider.dart';
 import 'package:guidel_assignment/service/current_location_service.dart';
@@ -21,8 +22,9 @@ class _MapPageState extends State<MapPage> {
   Set<Marker> _markers = {};
   LatLng? _currentPosition;
   List<POI> _pois = [];
-  late MapService _mapService;
+  late MarkerService _mapService;
   late LocationService _locationService;
+  late GetCenterService _centerService;
   
 
 
@@ -31,8 +33,9 @@ class _MapPageState extends State<MapPage> {
   void initState() {
     super.initState();
     final poiProvider = Provider.of<POIProvider>(context, listen: false);
-    _mapService = MapService(poiProvider);
+    _mapService = MarkerService(poiProvider);
     _locationService = LocationService();
+    _centerService = GetCenterService();
     _fetchCurrentLocation();
   }
   
@@ -70,11 +73,10 @@ class _MapPageState extends State<MapPage> {
    */
   Future<void> _searchHere() async {
     if (_mapController != null) {
-      final centerPosition = await _mapService.getCenterPosition(_mapController!);
+      final centerPosition = await _centerService.getCenterPosition(_mapController!);
       final poiProvider = Provider.of<POIProvider>(context, listen: false);
       poiProvider.currentPosition = centerPosition;
       await _fetchMarkers();
-      _pois = poiProvider.pois;
       setState(() {});
     }
   }
@@ -114,8 +116,8 @@ class _MapPageState extends State<MapPage> {
             ],
           ),
         
-          // Draggable Scrollable Sheet
-          if (_pois.isNotEmpty) // Check if there are any POIs to show
+            // Draggable Scrollable Sheet
+           // Check if there are any POIs to show
             DraggableScrollableSheet(
               initialChildSize: 0.3,
               minChildSize: 0.2,
@@ -129,7 +131,7 @@ class _MapPageState extends State<MapPage> {
                   ),
                   child: Column(
                     children: [
-                      // Search Here button
+                      // Search Here button when on tapped finds POI's for the current center of the map
                       TextButton(
                         onPressed: () {
                           _searchHere(); 
@@ -160,7 +162,14 @@ class _MapPageState extends State<MapPage> {
 
                       // Expanded ListView for POIs
                       Expanded(
-                        child: ListView.builder(
+                        child: _pois.isEmpty
+                            ?Center(
+                              child: Text(
+                                'No landmarks found in this area.',
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                            )
+                        : ListView.builder(
                           controller: scrollController,
                           itemCount: _pois.length,
                           itemBuilder: (context, index) {
@@ -176,7 +185,7 @@ class _MapPageState extends State<MapPage> {
                                 color: Colors.white,
                                 margin: EdgeInsets.symmetric(vertical: 8.0),
                                 child: ListTile(
-                                  leading: poi.imageUrl != null && poi.imageUrl.isNotEmpty
+                                  leading: poi.imageUrl.isNotEmpty
                                       ? Image.network(
                                           poi.imageUrl,
                                           width: 50,

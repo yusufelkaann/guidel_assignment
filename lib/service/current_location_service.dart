@@ -3,7 +3,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationService {
-//this function is to get the current location of the user
+//function to get the current location of the user
 Future<LatLng?> fetchCurrentLocation() async {
   // Check for location permission
   LocationPermission permission = await Geolocator.checkPermission();

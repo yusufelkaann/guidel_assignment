@@ -4,6 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class POIService {
+
+  /*
+    function to get POI's using google's google places api
+   */
   static const apiKey = "YOUR_API_KEY";
   Future<List<POI>> getNearbyPOIs(LatLng currentPosition, String type) async {
     

@@ -4,13 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:guidel_assignment/models/poi_model.dart';
 import 'package:guidel_assignment/service/current_location_service.dart';
-import 'package:provider/provider.dart';
 import '../providers/poi_type_provider.dart';
 
-class MapService {
+class MarkerService {
   final POIProvider poiProvider;
 
-  MapService(this.poiProvider);
+  MarkerService(this.poiProvider);
 
   Future<LatLng?> fetchCurrentLocation() async {
     final locationService = LocationService();
@@ -27,10 +26,8 @@ class MapService {
 
 
   /*function to fetch markers for the selectedPoiType and currentPosition
-      -
-  
-  
-  
+      -takes position and selectedType as a parameter
+      -goes through the fetched pois and matches them with the appropriate marker
   */
   Future<Map<String, dynamic>> fetchMarkers(LatLng currentPosition, String selectedType) async {
     Set<Marker> markers = {};
@@ -79,13 +76,5 @@ class MapService {
     }
     
     return {'markers': markers, 'pois': poiProvider.pois};
-  }
-
-  Future<LatLng> getCenterPosition(GoogleMapController mapController) async {
-    final visibleRegion = await mapController.getVisibleRegion();
-    return LatLng(
-      (visibleRegion.northeast.latitude + visibleRegion.southwest.latitude) / 2,
-      (visibleRegion.northeast.longitude + visibleRegion.southwest.longitude) / 2,
-    );
-  }
+  } 
 } 
