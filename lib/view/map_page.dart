@@ -32,6 +32,7 @@ class _MapPageState extends State<MapPage> {
     super.initState();
     final poiProvider = Provider.of<POIProvider>(context, listen: false);
     _mapService = MapService(poiProvider);
+    _locationService = LocationService();
     _fetchCurrentLocation();
   }
   

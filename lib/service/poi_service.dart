@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class POIService {
-  static const apiKey = "AIzaSyCID8F9J2ROH3_QfY7FjyrTkCoSxuMe3tM";
+  static const apiKey = "YOUR_API_KEY";
   Future<List<POI>> getNearbyPOIs(LatLng currentPosition, String type) async {
     
     const String baseUrl =

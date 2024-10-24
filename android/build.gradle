@@ -6,6 +6,10 @@ buildscript {
     }
 
     dependencies {
+        // Android Gradle Plugin (required for Android projects)
+        classpath 'com.android.tools.build:gradle:8.1.2' // Use the latest version compatible with your project
+
+        // Kotlin Gradle Plugin
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -18,13 +22,16 @@ allprojects {
 }
 
 rootProject.buildDir = '../build'
+
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
+
 subprojects {
     project.evaluationDependsOn(':app')
 }
 
+// Clean task to remove build directory
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
